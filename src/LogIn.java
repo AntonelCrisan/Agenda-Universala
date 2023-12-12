@@ -7,7 +7,7 @@ public class LogIn extends JFrame{
     private JPanel loginPanel;
     private JPasswordField password;
     private JButton inregistrareButton;
-    private JTextField email;
+    private JTextField textField1;
 
     public LogIn() {
 
@@ -15,14 +15,13 @@ public class LogIn extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 SignUp signup = new SignUp();
-                signup.show();
+                signup.runSignUpForm();
                 dispose();
                 setVisible(false);
-                new SignUp().setVisible(true);
             }
         });
     }
-    public void run(){
+    public void runLogInForm(){
         LogIn login = new LogIn();
         login.setContentPane(login.loginPanel);
         login.setSize(500, 500);
