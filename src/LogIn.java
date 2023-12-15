@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 public class LogIn extends JFrame{
     private JButton autentificareButton;
     private JPanel loginPanel;
@@ -18,6 +21,21 @@ public class LogIn extends JFrame{
                 signup.runSignUpForm();
                 dispose();
                 setVisible(false);
+            }
+        });
+        autentificareButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PreparedStatement pst;
+                try{
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/agenda_universala","root","");
+                    System.out.println("Succes");
+                }catch (ClassNotFoundException ex){
+                    ex.printStackTrace();
+                }catch (SQLException ex){
+                    ex.printStackTrace();
+                }
             }
         });
     }
