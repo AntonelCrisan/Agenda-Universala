@@ -1,32 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="AgendaUniversala">
-  <grid id="27dc6" binding="agendaPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="agendaPanel" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="20" left="30" bottom="20" right="30"/>
     <constraints>
-      <xy x="20" y="20" width="647" height="505"/>
+      <xy x="20" y="20" width="1140" height="659"/>
     </constraints>
     <properties>
-      <background color="-1"/>
+      <background color="-460545"/>
     </properties>
-    <border type="none"/>
+    <border type="line"/>
     <children>
+      <grid id="ecd77" layout-manager="GridLayoutManager" row-count="2" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="20" left="30" bottom="20" right="30"/>
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="326" height="104"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-460545"/>
+        </properties>
+        <border type="empty"/>
+        <children>
+          <component id="e30da" class="javax.swing.JButton" binding="editeazaProfilButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-12746497"/>
+              <foreground color="-1"/>
+              <text value="Editeaza profil"/>
+            </properties>
+          </component>
+          <vspacer id="f7c96">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <component id="1a991" class="javax.swing.JButton" binding="sarciniButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-12746497"/>
+              <foreground color="-1"/>
+              <text value="Sarcini"/>
+            </properties>
+          </component>
+          <component id="ee12c" class="javax.swing.JButton" binding="adaugaMembruButton">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <autoscrolls value="false"/>
+              <background color="-12746497"/>
+              <foreground color="-1"/>
+              <text value="Adauga membru"/>
+            </properties>
+          </component>
+          <component id="419b6" class="javax.swing.JButton" binding="afiseazaPersonalButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-12746497"/>
+              <foreground color="-1"/>
+              <text value="Afiseaza personal"/>
+            </properties>
+          </component>
+          <component id="56241" class="javax.swing.JButton" binding="button2" default-binding="true">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-12746497"/>
+              <foreground color="-1"/>
+              <text value="Button"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
       <component id="3de9" class="javax.swing.JLabel">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="2" col-span="2" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font name="Consolas" size="36" style="1"/>
           <text value="AGENDA UNIVERSALA"/>
-        </properties>
-      </component>
-      <component id="3c6b2" class="javax.swing.JButton" binding="adaugaMembruButton" default-binding="true">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-12746497"/>
-          <foreground color="-1"/>
-          <text value="Adauga membru"/>
         </properties>
       </component>
     </children>

@@ -1,5 +1,3 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.security.SecureRandom;
 import javax.swing.*;
 import java.sql.Connection;
@@ -15,45 +13,36 @@ public class CreateAccount extends JFrame{
     private JTextField nameJ;
     private JLabel errorMessage;
     public CreateAccount() {
-        genereazaButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@-_";
-                SecureRandom random = new SecureRandom();
-                StringBuilder passwordB = new StringBuilder();
-                for (int i = 0; i < 12; i++) {
-                    int randomIndex = random.nextInt(characters.length());
-                    passwordB.append(characters.charAt(randomIndex));
+        //run create account page
+        setContentPane(createAccountPanel);
+        setSize(500, 500);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        genereazaButton.addActionListener(e -> generatePassword());
+        //add member
+        adaugaButton.addActionListener(e -> {
+            String emailR = email.getText();
+            boolean isValid = isValidEmailDomain(emailR);
+            if(isValid){
+                try{
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/agenda_universala","root","");
+                    PreparedStatement ps = con.prepareStatement("insert into users(name, email, password, role) values(?, ?, ?, ?)");
+                    ps.setString(1, nameJ.getText());
+                    ps.setString(2, email.getText());
+                    ps.setString(3, passwordG.getText());
+                    ps.setString(4, (String) rol.getSelectedItem());
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Membru adaugat cu succes!");
+                    setVisible(false);
                 }
-                passwordG.setText(passwordB.toString());
-            }
-        });
-        adaugaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String emailR = email.getText();
-                boolean isValid = isValidEmailDomain(emailR);
-                if(isValid){
-                    try{
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/agenda_universala","root","");
-                        PreparedStatement ps=con.prepareStatement("insert into users(name, email, password, role) values(?, ?, ?, ?)");
-                        ps.setString(1, nameJ.getText());
-                        ps.setString(2, email.getText());
-                        ps.setString(3, passwordG.getText());
-                        ps.setString(4, (String) rol.getSelectedItem());
-                        ps.executeUpdate();
-                        JOptionPane.showMessageDialog(null, "Membru adaugat cu succes!");
-                        setVisible(false);
-                    }
-                    catch(Exception ex){
-                        errorMessage.setText("Nume sau email deja folosit!");
-                    }
-                }if(email.getText().equals("") || nameJ.getText().equals("")){
-                    errorMessage.setText("Toate campurile trebuie completate!");
-                }else{
-                    errorMessage.setText("Emailul introdus este incorect!");
+                catch(Exception ex){
+                    errorMessage.setText("Nume sau email deja folosit!");
                 }
+            }if(email.getText().isEmpty() && nameJ.getText().isEmpty()){
+                errorMessage.setText("Toate campurile trebuie completate!");
+            }else{
+                errorMessage.setText("Emailul introdus este incorect!");
             }
         });
     }
@@ -61,11 +50,14 @@ public class CreateAccount extends JFrame{
         String Pattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
         return email.matches(Pattern);
     }
-    public void runCreateAccount(){
-        CreateAccount create = new CreateAccount();
-        create.setContentPane(create.createAccountPanel);
-        create.setSize(500, 500);
-        create.setLocationRelativeTo(null);
-        create.setVisible(true);
+    private void generatePassword(){
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@-_";
+        SecureRandom random = new SecureRandom();
+        StringBuilder passwordB = new StringBuilder();
+        for (int i = 0; i < 12; i++) {
+            int randomIndex = random.nextInt(characters.length());
+            passwordB.append(characters.charAt(randomIndex));
+        }
+        passwordG.setText(passwordB.toString());
     }
 }
