@@ -6,44 +6,56 @@ import java.sql.PreparedStatement;
 public class CreateAccount extends JFrame{
     private JPanel createAccountPanel;
     private JTextField email;
-    private JButton genereazaButton;
+    private JButton generatePassword;
     private JLabel passwordG;
-    private JButton adaugaButton;
+    private JButton addButton;
     private JComboBox rol;
     private JTextField nameJ;
     private JLabel errorMessage;
+    private JTextField username;
+    private JLabel message;
+
     public CreateAccount() {
         //run create account page
         setContentPane(createAccountPanel);
         setSize(500, 500);
         setLocationRelativeTo(null);
+        setTitle("Adăugare membru");
         setVisible(true);
-        genereazaButton.addActionListener(e -> generatePassword());
+        generatePassword.addActionListener(e -> generatePassword());
         //add member
-        adaugaButton.addActionListener(e -> {
+        addButton.addActionListener(e -> {
             String emailR = email.getText();
             boolean isValid = isValidEmailDomain(emailR);
-            if(isValid){
+            if(email.getText().isEmpty() || nameJ.getText().isEmpty() || username.getText().isEmpty() || passwordG.getText().isEmpty()){
+                errorMessage.setText("Toate câmpurile trebuie completate!");
+                message.setText(null);
+            }else if(isValid) {
                 try{
                     Class.forName("com.mysql.cj.jdbc.Driver");
                     Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/agenda_universala","root","");
-                    PreparedStatement ps = con.prepareStatement("insert into users(name, email, password, role) values(?, ?, ?, ?)");
+                    PreparedStatement ps = con.prepareStatement("insert into users(name,username, email, password, role) values(?, ?,?, ?, ?)");
                     ps.setString(1, nameJ.getText());
-                    ps.setString(2, email.getText());
-                    ps.setString(3, passwordG.getText());
-                    ps.setString(4, (String) rol.getSelectedItem());
+                    ps.setString(2, username.getText());
+                    ps.setString(3, email.getText());
+                    ps.setString(4, passwordG.getText());
+                    ps.setString(5, (String) rol.getSelectedItem());
                     ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Membru adaugat cu succes!");
-                    setVisible(false);
+                    message.setText("Membru adăugat cu succes!");
+                    nameJ.setText(null);
+                    username.setText(null);
+                    email.setText(null);
+                    passwordG.setText(null);
+                    errorMessage.setText(null);
                 }
                 catch(Exception ex){
-                    errorMessage.setText("Nume sau email deja folosit!");
+                    errorMessage.setText("Nume de utilizator sau email deja folosit!");
+                    message.setText(null);
                 }
-            }if(email.getText().isEmpty() && nameJ.getText().isEmpty()){
-                errorMessage.setText("Toate campurile trebuie completate!");
-            }else{
-                errorMessage.setText("Emailul introdus este incorect!");
-            }
+            }else {
+            errorMessage.setText("Emailul introdus este incorect!");
+            message.setText(null);
+        }
         });
     }
     private boolean isValidEmailDomain(String email){

@@ -1,50 +1,83 @@
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 public class AgendaUniversala extends JFrame{
     private JPanel agendaPanel;
-    public JButton adaugaMembruButton;
-    private JButton editeazaProfilButton;
-    private JButton sarciniButton;
-    private JButton afiseazaPersonalButton;
-    private JButton button2;
+    private JLabel logOut;
+    private JLabel roleConnected;
+    private JLabel name;
+    private JPanel editProfilePanel;
+    private JPanel taskPanel;
+    private JPanel addMemberPanel;
+    private JPanel showMembersPanel;
+    private JLabel editProfile;
+    private JLabel tasks;
+    private JLabel addMember;
+    private JLabel displayMembers;
     public AgendaUniversala() {
         //run agenda page
         setContentPane(agendaPanel);
         setSize(1200, 800);
         setLocationRelativeTo(null);
+        setTitle("Agendă universală");
         setVisible(true);
         //role visibility
         String role = new LogIn().getRole();
         roleVisibility(role);
-        adaugaMembruButton.addActionListener(e -> {
-            new CreateAccount().setVisible(true);
+        name.setText(new LogIn().getName());
+        roleConnected.setText(role);
+        logOut.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                new LogIn().runLogIn();
+                dispose();
+            }
         });
-        editeazaProfilButton.addActionListener(e -> {
-            new EditProfile().setVisible(true);
+        editProfilePanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                new EditProfile().setVisible(true);
+            }
         });
-        afiseazaPersonalButton.addActionListener(e -> {
-            new ShowMembers().setVisible(true);
+        taskPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                if("Admin".equals(role)){
+                    new Tasks().setVisible(true);
+                }else{
+                    new MembersTasks().setVisible(true);
+                }
+            }
         });
-        sarciniButton.addActionListener(e ->{
-            if("admin".equals(role)){
-                new Tasks().setVisible(true);
-            }else{
-                new MembersTasks().setVisible(true);
+        addMemberPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                new CreateAccount().setVisible(true);
+            }
+        });
+        showMembersPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                new ShowMembers().setVisible(true);
             }
         });
     }
     public void roleVisibility(String role){
-        if("admin".equals(role)){
-            adaugaMembruButton.setVisible(true);
-            editeazaProfilButton.setVisible(true);
-            afiseazaPersonalButton.setVisible(true);
-        }else if("profesor".equals(role)){
-            adaugaMembruButton.setVisible(false);
-            editeazaProfilButton.setVisible(true);
-            afiseazaPersonalButton.setVisible(false);
+        if("Admin".equals(role)){
+            addMemberPanel.setVisible(true);
+            showMembersPanel.setVisible(true);
+            taskPanel.setVisible(true);
+            editProfilePanel.setVisible(true);
         }else{
-            adaugaMembruButton.setVisible(false);
-            editeazaProfilButton.setVisible(false);
-            afiseazaPersonalButton.setVisible(false);
+            addMemberPanel.setVisible(false);
+            showMembersPanel.setVisible(false);
+            taskPanel.setVisible(true);
+            editProfilePanel.setVisible(true);
         }
     }
 }
